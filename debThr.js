@@ -29,9 +29,7 @@ const throttling = function(fn, timer){
             setTimeout(() => {
                 flag = true
             }, timer);
-        }
-
-        
+        } 
     };
 };
 
