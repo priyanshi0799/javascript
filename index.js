@@ -25,8 +25,23 @@ Array.prototype.myMap = function(callback){
     return newArr;
 }
 
-console.log(arr.myMap((val) => {
+let outputMapArr = arr.myMap((val) => {
     return val * 2;
-}))
+});
+console.log(outputMapArr);
 
 //The major difference b/w forEach and map is, map returns a new array whereas forEach returns undefined.
+
+
+//! polyfill for filter
+Array.prototype.myFilter = function(callback){
+    let newArr = [];
+    for(let i = 0; i < this.length; i++){
+        if(callback(this[i], i, this))
+            newArr.push(this[i])
+    }
+    return newArr;
+}
+
+let outputFilterArr = arr.myFilter((val) => val % 2 === 0);
+console.log(outputFilterArr)
