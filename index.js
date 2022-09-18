@@ -45,3 +45,25 @@ Array.prototype.myFilter = function(callback){
 
 let outputFilterArr = arr.myFilter((val) => val % 2 === 0);
 console.log(outputFilterArr)
+
+//! polyfill for reduce
+Array.prototype.myReduce = function(callback, initialValue){
+    let accumulator;
+    let firstIndex;
+
+    if(arguments.length === 1){
+        accumulator = this[0];
+        firstIndex = 1;
+    }else{
+        accumulator = initialValue;
+        firstIndex = 0;
+    }
+
+    for(let i = firstIndex; i < this.length; i++){
+        accumulator = callback(accumulator, this[i], i);
+    }
+    return accumulator;
+}
+
+let outputReduceArr = arr.myReduce((a,b) => a+=b , 0);
+console.log(outputReduceArr);
