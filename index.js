@@ -281,3 +281,35 @@ Promise.myRace = function(arr){
 Promise.myRace([p1,p2,p3])
 .then((val) => console.log('Promise Race polyfill ', val))
 .catch((err) => console.log('Promise race polyfill ', err));
+
+//!Promise.any
+//takes array of promises
+//returns the first promise that is fulfilled.
+//if all promises are rejected, then it returns an aggergator error
+
+Promise.any([p1,p2,p3])
+.then((val) => console.log('Promise Any ', val))
+.catch((err) => console.log('Promise Any ', err))
+
+//!Polyfill for promise.any
+Promise.myAny = function(arr){
+    let aggergator = [];
+    let completed = 0;
+    
+    return new Promise((resolve, reject) => {
+        arr.forEach((ar,index) => {
+            Promise.resolve(ar)
+            .then(resolve)
+            .catch((err) => {
+                aggergator[index] = err;
+                completed ++;
+                if(completed === arr.length)
+                    reject(aggergator);
+            });
+        });
+    });
+};
+
+Promise.any([p1,p2,p3])
+.then((val) => console.log('Promise Any Polyfill', val))
+.catch((err) => console.log('Promise Any Polyfill', err))
