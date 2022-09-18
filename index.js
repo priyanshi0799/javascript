@@ -67,3 +67,58 @@ Array.prototype.myReduce = function(callback, initialValue){
 
 let outputReduceArr = arr.myReduce((a,b) => a+=b , 0);
 console.log(outputReduceArr);
+
+
+
+const myName = {
+    fName: 'Priyanshi',
+    lName: 'Gupta'
+}
+
+function printMyName(callee, city, country){
+    console.log(`Called with ${callee}, ${this.fName} ${this.lName}, ${city} - ${country}`);
+}
+
+//! polyfill for call, apply and bind methods
+//using the call and apply methods, we can borrow functions from other objects and use them with the data of some other objects.
+//the only difference between call and apply is, call takes comma separated arguments, whereas,
+//apply takes an arraylist as the argument
+
+//Actual Call
+printMyName.call(myName, 'Actual Call', 'Noida', 'India');
+
+//Polyfill for Call
+Function.prototype.myCall = function(context, ...args){
+    context.fn = this;
+    context.fn(...args);
+}
+printMyName.myCall(myName, 'Polyfill call', 'Noida', 'India');
+
+//Actual apply
+printMyName.apply(myName, ['Actual Apply', 'Noida', 'India']);
+
+//Polyfill for Apply
+Function.prototype.myApply = function(context, arg){
+    context.fn = this;
+    context.fn(...arg);
+}
+printMyName.myApply(myName, ['Polyfill Apply', 'Noida', 'India']);
+
+//bind is slightly different from call and apply.
+//bind actually binds the method with the object and returns us the copy of that method, so that we can invoke it later.
+//its beauty is, we can add even more arguments to the returned function.
+
+//Actual bind
+const res = printMyName.bind(myName,'Actual Bind', 'Noida');
+res('India');
+
+//Polyfill for bind
+Function.prototype.myBind = function(...args){
+    let fn = this;
+    return function(...args2){
+        fn.apply(args[0], [...args.slice(1), ...args2]);
+    }
+}
+
+const res2 = printMyName.myBind(myName, 'Polyfill Bind');
+res2('Noida', 'India');
