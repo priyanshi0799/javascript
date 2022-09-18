@@ -258,3 +258,26 @@ Promise.myPromiseAllSettled([p1,p2,p3])
 .then((res) => console.log(res))    
 .catch((err) => console.log(err));
 
+
+//!Promise.race
+//takes array of promises
+//returns the first promise that is either fulfilled or rejected.
+
+Promise.race([p1,p2,p3])
+.then((val) => console.log('Promise Race ', val))
+.catch((err) => console.log('Promise race ', err));
+
+//!Polyfill for promise.race
+Promise.myRace = function(arr){
+    return new Promise((resolve, reject) => {
+        arr.forEach((ar) => {
+            Promise.resolve(ar)
+            .then(resolve)
+            .catch(reject)
+        });
+    });
+};
+
+Promise.myRace([p1,p2,p3])
+.then((val) => console.log('Promise Race polyfill ', val))
+.catch((err) => console.log('Promise race polyfill ', err));
