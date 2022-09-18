@@ -15,3 +15,18 @@ Array.prototype.myForEach = function(callback){
 arr.myForEach((val, index) => {
     console.log(`Element at ${index} doubled: ${val*2}`);
 })
+
+//! polyfill for map
+Array.prototype.myMap = function(callback){
+    let newArr = [];
+    for(let i = 0; i<this.length; i++){
+        newArr.push(callback(this[i], i ,this));
+    }
+    return newArr;
+}
+
+console.log(arr.myMap((val) => {
+    return val * 2;
+}))
+
+//The major difference b/w forEach and map is, map returns a new array whereas forEach returns undefined.
