@@ -122,3 +122,53 @@ Function.prototype.myBind = function(...args){
 
 const res2 = printMyName.myBind(myName, 'Polyfill Bind');
 res2('Noida', 'India');
+
+
+
+//! Promises
+// Promise is a special javascript object that links the producing and consuming code together
+// the producing code takes whatever time it needs to produce the output, and then returns the 
+// produced code to the consumer.
+
+let flag = false;
+let promise = new Promise((resolve, reject) => {
+    //...executor
+    if(flag){
+        resolve(10);
+    }else{
+        setTimeout(() => {
+            reject('Oops! Some error has occured.');
+        },2000)  ;
+    }
+})
+
+console.log(promise);   //this promise object has following internal properties
+                        //initially -> pending with undefined value
+                        //if success -> fulfilled with resolve value
+                        //if failed -> rejected with error value
+
+//Now these properties are internal which cant be accessed directly, so then, catch and finally are used.
+
+promise
+    .then((value) => console.log(value))
+    .catch((error) => console.log(error));
+
+//!then
+//Also, then takes two callbacks, one for success and one for failure, so above one can also be written as:
+promise.then((value) =>  console.log(value), (error) => console.log(error));
+//if we are interested only in successful completion then we can provide only one callback to then,
+//if only failed one, then first argument will be null or we can use catch.
+
+//!finally
+//Now just like we have finally in try catch block, we have finally in promises as well.
+//finally will always run, when the promise is settled(resolved or rejected).
+//finally takes void callback as an argument
+//it doesn't know whether the promise is resolved or rejected
+//it doesn't return anything, and even if it does, the returned value is ignored while execution.
+//if finally throws an error, it goes to nearest error handler.
+
+promise
+    .then((value) => console.log(value))
+    .catch((error) => console.log(error))
+    .finally(() => console.log("Hey! Finally ;)", promise));
+
