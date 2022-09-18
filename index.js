@@ -172,3 +172,60 @@ promise
     .catch((error) => console.log(error))
     .finally(() => console.log("Hey! Finally ;)", promise));
 
+
+//---------------------------------------------------------------------------------------------
+let p1 = new Promise((resolve, reject) => {
+    console.log("First promise");
+    setTimeout(() => {
+        resolve(10);
+    },1000);
+});
+
+let p2 = new Promise((resolve, reject) => {
+    console.log("Second promise");
+    setTimeout(() => {
+        reject('Error in second promise');
+    },2000);
+});
+
+let p3 = new Promise((resolve, reject) => {
+    console.log("Third promise");
+    setTimeout(() => {
+        resolve(20);
+    },500);
+});
+
+//!Promise.all
+//takes array of promises
+//returns a single promise (array of the results) that resolves when all the promises are resolved
+//if an error comes in any of the promise, then control goes directly to catch block
+Promise.all([p1,p3])
+.then((res) => {
+    console.log(res)
+})
+.catch((err) => {
+    console.log(err)
+})
+
+//!polyfill for promise.all
+Promise.myPromiseAll = function(arr){
+    let result = [];
+    let completed = 0;
+    return new Promise((resolve, reject) => {
+        arr.map((ar, index) => {
+            Promise.resolve(ar)
+            .then((res) =>{
+                completed++;
+                result[index] = res;
+
+                if(completed === arr.length)
+                    resolve(result);
+            })
+            .catch((err) => reject(err))
+        });
+    });
+};
+
+Promise.myPromiseAll([p1,p2,p3])
+.then((val) => console.log(val))
+.catch((err) => console.log(err));
