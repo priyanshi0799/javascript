@@ -197,11 +197,11 @@ let p3 = new Promise((resolve, reject) => {
 
 //!Promise.all
 //takes array of promises
-//returns a single promise (array of the results) that resolves when all the promises are resolved
+//returns a single promise (array of the results) that resolves when all the promises are "resolved"
 //if an error comes in any of the promise, then control goes directly to catch block
 Promise.all([p1,p3])
 .then((res) => {
-    console.log(res)
+    console.log(res)    //array of all resolved promises values
 })
 .catch((err) => {
     console.log(err)
@@ -229,3 +229,32 @@ Promise.myPromiseAll = function(arr){
 Promise.myPromiseAll([p1,p2,p3])
 .then((val) => console.log(val))
 .catch((err) => console.log(err));
+
+
+//!Promise.allSettled
+//takes array of promises
+//returns a new promise that resolves after all input promises are settled
+Promise.allSettled([p1,p2,p3])
+.then((res) => console.log(res))    //array of objects containing status and value
+.catch((err) => console.log(err))
+
+//!Polyfill for Promise.allSettled
+Promise.myPromiseAllSettled = function(arr){
+    let promise = arr.map((ar) => {
+        return Promise.resolve(ar)
+               .then((val) =>({
+                status: 'fulfilled', value: val
+               }))
+               .catch((err) => ({
+                status: 'rejected', reason: err
+               }))
+    })
+
+    console.log(promise)
+    return Promise.all(promise)
+}
+
+Promise.myPromiseAllSettled([p1,p2,p3])
+.then((res) => console.log(res))    
+.catch((err) => console.log(err));
+
