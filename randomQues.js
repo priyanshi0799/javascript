@@ -53,3 +53,49 @@ console.log(findPath(ob, 'a.b.c'));
 console.log(findPath(ob, 'a.b')); 
 console.log(findPath(ob, 'a.b.d')); 
 console.log(findPath(ob, 'a.c')); 
+
+
+//Flat the array
+let arrFlat = [[1,2,3],[4,5,[6,7,8,[1,2,3],9]],[10,11,12],13,14];
+let res = [];
+function flatArr(arr){
+    arr.forEach(element => {
+        if(Array.isArray(element)){
+            flatArr(element)
+        }else{
+            res.push(element)
+        }
+    });
+}
+flatArr(arrFlat)
+console.log(res);
+
+res = [];
+
+//flat the array based on depth
+function flatArrDepth(arr,depth){
+    arr.forEach(element => {
+        if(Array.isArray(element) && depth > 0){
+            flatArrDepth(element, depth - 1)
+        }else{
+            res.push(element)
+        }
+    });
+}
+
+flatArrDepth(arrFlat,2);
+console.log(res);
+
+//Question -> predict the output
+//here, let x = y = 0; is not equal to, let x = 0; let y = 0;
+//rather, it is equal to, y = 0; let x = y;
+//so, by default y is assigned var, hence global scoped, whereas, x is let so, function scoped
+
+function foo() {
+    let x = y = 0;
+    x++;
+    y++;
+    return x;
+}
+
+console.log(foo(), typeof x, typeof y);
