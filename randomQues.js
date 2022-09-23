@@ -54,7 +54,7 @@ console.log(findPath(ob, 'a.b'));
 console.log(findPath(ob, 'a.b.d')); 
 console.log(findPath(ob, 'a.c')); 
 
-
+//----------------------------------------------------------------------------------------
 //Flat the array
 let arrFlat = [[1,2,3],[4,5,[6,7,8,[1,2,3],9]],[10,11,12],13,14];
 let res = [];
@@ -86,6 +86,7 @@ function flatArrDepth(arr,depth){
 flatArrDepth(arrFlat,2);
 console.log(res);
 
+//----------------------------------------------------------------------------------------
 //Question -> predict the output
 //here, let x = y = 0; is not equal to, let x = 0; let y = 0;
 //rather, it is equal to, y = 0; let x = y;
@@ -101,6 +102,8 @@ function foo() {
 console.log(foo(), typeof x, typeof y);
 
 
+
+//-----------------------------------------------------------------------------------------
 //cal(2).add(3).add(1).sub(3).mul(2).val()
 let cal = (inp) => {
 	return {
@@ -123,4 +126,12 @@ let cal = (inp) => {
     }
 }
 
-console.log(cal(2).add(3).add(1).sub(3).mul(2).val())
+console.log(cal(2).add(3).add(1).sub(3).mul(2).val());
+
+//----------------------------------------------------------------------------------
+const test = 'Lydia Hallie';
+
+console.log(!typeof test === 'object'); 
+console.log(!typeof test === 'string');
+console.log(!typeof test === false);
+console.log(typeof test, !typeof test);
