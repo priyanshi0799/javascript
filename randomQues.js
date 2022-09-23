@@ -99,3 +99,28 @@ function foo() {
 }
 
 console.log(foo(), typeof x, typeof y);
+
+
+//cal(2).add(3).add(1).sub(3).mul(2).val()
+let cal = (inp) => {
+	return {
+        inp: inp,
+        add: function(a){
+                this.inp = this.inp + a;
+                return this;
+        },
+        sub: function(b){
+                this.inp = this.inp-b;
+                return this;
+        },
+        mul: function(c){
+                this.inp =  this.inp*c;
+                return this;
+        },
+        val: function(){
+                return this.inp;
+        }
+    }
+}
+
+console.log(cal(2).add(3).add(1).sub(3).mul(2).val())
