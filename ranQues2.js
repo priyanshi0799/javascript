@@ -1,6 +1,6 @@
 (function() {
     var objA = {
-            foo: 'foo'
+        foo: 'foo'
     };
     var objB = objA;
     objB.foo = 'bar';
